@@ -338,6 +338,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // Get each Table row from scraper
     List<Map<String, dynamic>> data = webScraper.getElement('#main_table_countries_today > tbody > tr', ['title']);
 
+    // Move the world data from last to first
+    Map<String, dynamic> worldData = data.elementAt(data.length - 1);
+    data.removeLast();
+    data.insert(0, worldData);
+
     // Clear previous data
     countryNames.clear();
     totalCases.clear();
@@ -368,10 +373,10 @@ class _MyHomePageState extends State<MyHomePage> {
       firstCases.add(elems.elementAt(12).trim().isEmpty ? "0" : elems.elementAt(12));
     }
 
-    // Last row is "Total:"
+    // First row is "Total:"
     // Remove it and add "Planet Earth" as name
-    countryNames.removeLast();
-    countryNames.add("Planet Earth");
+    countryNames.removeAt(0);
+    countryNames.insert(0, "Planet Earth");
 
     print("processing-ended");
 

@@ -2,6 +2,8 @@ import 'package:covid19counter/CountrySearchView.dart';
 import 'package:covid19counter/api/stats.dart';
 import 'package:covid19counter/flagUrl.dart';
 import 'package:covid19counter/models/stat.dart';
+import 'package:covid19counter/widgets/InfoTile.dart';
+import 'package:covid19counter/widgets/bigNumber.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -291,54 +293,26 @@ class _MyHomePageState extends State<MyHomePage> {
                               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                               child: Column(
                                 children: <Widget>[
-                                  ...generateBigNumberWidget(
-                                      Icons.content_paste,
-                                      Colors.orange,
-                                      (_loadedData
-                                          .elementAt(index)
-                                          .total_cases == "null")
-                                          ? "0"
-                                          : _loadedData
-                                          .elementAt(index)
-                                          .total_cases,
-                                      "Total Cases"),
+                                  ...BigNumberWidget(
+                                      Icons.content_paste, Colors.orange, _loadedData
+                                      .elementAt(index)
+                                      .total_cases, "Total Cases"),
                                   SizedBox(height: 20),
-                                  ...generateBigNumberWidget(
-                                      Icons.airline_seat_individual_suite,
-                                      Colors.red,
-                                      (_loadedData
+                                  ...BigNumberWidget(Icons.airline_seat_individual_suite, Colors.red,
+                                      _loadedData
                                           .elementAt(index)
-                                          .total_deaths == "null")
-                                          ? "0"
-                                          : _loadedData
-                                          .elementAt(index)
-                                          .total_deaths,
-                                      "Total Deaths"),
+                                          .total_deaths, "Total Deaths"),
                                   SizedBox(height: 20),
-                                  ...generateBigNumberWidget(
-                                      Icons.autorenew,
-                                      Colors.green,
-                                      (_loadedData
-                                          .elementAt(index)
-                                          .recovered_cases == "null")
-                                          ? "0"
-                                          : _loadedData
-                                          .elementAt(index)
-                                          .recovered_cases,
-                                      "Total Recovered"),
+                                  ...BigNumberWidget(
+                                      Icons.autorenew, Colors.green, _loadedData
+                                      .elementAt(index)
+                                      .recovered_cases, "Total Recovered"),
                                   Divider(height: 40),
                                   // Generating info tiles
-                                  generateInfoTile(
-                                      Icons.new_releases,
-                                      (_loadedData
-                                          .elementAt(index)
-                                          .active_cases == "null")
-                                          ? "0"
-                                          : _loadedData
-                                          .elementAt(index)
-                                          .active_cases,
-                                      "Active Cases"),
-                                  generateInfoTile(
+                                  InfoTile(Icons.new_releases, _loadedData
+                                      .elementAt(index)
+                                      .active_cases, "Active Cases"),
+                                  InfoTile(
                                       Icons.group_add,
                                       (_loadedData
                                           .elementAt(index)
@@ -348,26 +322,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                           .elementAt(index)
                                           .new_cases,
                                       "New Cases"),
-                                  generateInfoTile(
-                                      Icons.sentiment_very_dissatisfied,
-                                      (_loadedData
-                                          .elementAt(index)
-                                          .new_deaths == "null")
-                                          ? "0"
-                                          : _loadedData
-                                          .elementAt(index)
-                                          .new_deaths,
-                                      "New Deaths"),
-                                  generateInfoTile(
-                                      Icons.airline_seat_flat_angled,
-                                      (_loadedData
-                                          .elementAt(index)
-                                          .critical_cases == "null")
-                                          ? "0"
-                                          : _loadedData
-                                          .elementAt(index)
-                                          .critical_cases,
-                                      "Critical Cases"),
+                                  InfoTile(Icons.sentiment_very_dissatisfied, _loadedData
+                                      .elementAt(index)
+                                      .new_deaths, "New Deaths"),
+                                  InfoTile(
+                                      Icons.airline_seat_flat_angled, _loadedData
+                                      .elementAt(index)
+                                      .critical_cases, "Critical Cases"),
                                 ],
                               ),
                             );
@@ -398,33 +359,5 @@ class _MyHomePageState extends State<MyHomePage> {
     _loadedData = await StatsAPI.getAllStats();
     setState(() {});
     return true;
-  }
-
-  Widget generateInfoTile(IconData icon, String data, String info) {
-    return ListTile(
-        leading: Icon(icon),
-        title: Text(formatter.format(int.parse(data))),
-        trailing: Text(info),
-        contentPadding: EdgeInsets.symmetric(horizontal: 50));
-  }
-
-  List<Widget> generateBigNumberWidget(IconData icon, Color color, String bigNumber, String title) {
-    return [
-      Text(
-        formatter.format(int.parse(bigNumber)),
-        style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold, color: color),
-        textAlign: TextAlign.center,
-      ),
-      Row(
-        children: <Widget>[
-          Icon(
-            icon,
-            color: color,
-          ),
-          Text(" " + title, style: TextStyle(color: color))
-        ],
-        mainAxisAlignment: MainAxisAlignment.center,
-      ),
-    ];
   }
 }

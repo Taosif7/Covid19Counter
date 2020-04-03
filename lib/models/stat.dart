@@ -24,6 +24,13 @@ class model_stat {
   );
 
   factory model_stat.fromJson(dynamic data) {
+    data["cases"]["new"] ??= 0;
+    data["cases"]["active"] ??= 0;
+    data["cases"]["critical"] ??= 0;
+    data["cases"]["recovered"] ??= 0;
+    data["cases"]["total"] ??= 0;
+    data["deaths"]["new"] ??= 0;
+    data["deaths"]["total"] ??= 0;
     return new model_stat(
       data["country"].toString(),
       data["cases"]["new"].toString(),

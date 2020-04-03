@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 NumberFormat formatter = new NumberFormat("##,##,##,###");
 
 List<Widget> BigNumberWidget(IconData icon, Color color, String bigNumber, String title) {
-  if (bigNumber == "null") bigNumber = "0";
   bigNumber = formatter.format(int.parse(bigNumber));
 
   return [

@@ -229,7 +229,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             return Container(
                               margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
                               decoration: new BoxDecoration(
-                                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 8, offset: Offset(0, 6))]),
+                                  boxShadow: [
+                                    BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 8, offset: Offset(0, 6))
+                                  ]),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: Stack(
@@ -272,7 +274,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       // but we don't swipe it, we swipe the controllerFlags
                       // and in turn it swipes the infoPage
                       SizedBox(
-                        height: MediaQuery.of(context).copyWith().size.height,
+                        height: MediaQuery
+                            .of(context)
+                            .copyWith()
+                            .size
+                            .height,
                         child: new Swiper(
                           controller: controllerInfoPage,
                           itemCount: _loadedData.length,
@@ -284,35 +290,82 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Column(
                                 children: <Widget>[
                                   ...generateBigNumberWidget(
-                                      Icons.content_paste, Colors.orange, _loadedData
-                                      .elementAt(index)
-                                      .total_cases, "Total Cases"),
-                                  SizedBox(height: 20),
-                                  ...generateBigNumberWidget(Icons.airline_seat_individual_suite, Colors.red,
-                                      _loadedData
+                                      Icons.content_paste,
+                                      Colors.orange,
+                                      (_loadedData
                                           .elementAt(index)
-                                          .total_deaths, "Total Deaths"),
+                                          .total_cases == "null")
+                                          ? "0"
+                                          : _loadedData
+                                          .elementAt(index)
+                                          .total_cases,
+                                      "Total Cases"),
                                   SizedBox(height: 20),
                                   ...generateBigNumberWidget(
-                                      Icons.autorenew, Colors.green, _loadedData
-                                      .elementAt(index)
-                                      .recovered_cases, "Total Recovered"),
+                                      Icons.airline_seat_individual_suite,
+                                      Colors.red,
+                                      (_loadedData
+                                          .elementAt(index)
+                                          .total_deaths == "null")
+                                          ? "0"
+                                          : _loadedData
+                                          .elementAt(index)
+                                          .total_deaths,
+                                      "Total Deaths"),
+                                  SizedBox(height: 20),
+                                  ...generateBigNumberWidget(
+                                      Icons.autorenew,
+                                      Colors.green,
+                                      (_loadedData
+                                          .elementAt(index)
+                                          .recovered_cases == "null")
+                                          ? "0"
+                                          : _loadedData
+                                          .elementAt(index)
+                                          .recovered_cases,
+                                      "Total Recovered"),
                                   Divider(height: 40),
                                   // Generating info tiles
-                                  generateInfoTile(Icons.new_releases, _loadedData
-                                      .elementAt(index)
-                                      .active_cases, "Active Cases"),
-                                  generateInfoTile(Icons.group_add, _loadedData
-                                      .elementAt(index)
-                                      .new_cases, "New Cases"),
                                   generateInfoTile(
-                                      Icons.sentiment_very_dissatisfied, _loadedData
-                                      .elementAt(index)
-                                      .new_deaths, "New Deaths"),
+                                      Icons.new_releases,
+                                      (_loadedData
+                                          .elementAt(index)
+                                          .active_cases == "null")
+                                          ? "0"
+                                          : _loadedData
+                                          .elementAt(index)
+                                          .active_cases,
+                                      "Active Cases"),
                                   generateInfoTile(
-                                      Icons.airline_seat_flat_angled, _loadedData
-                                      .elementAt(index)
-                                      .critical_cases, "Critical Cases"),
+                                      Icons.group_add,
+                                      (_loadedData
+                                          .elementAt(index)
+                                          .new_cases == "null")
+                                          ? "0"
+                                          : _loadedData
+                                          .elementAt(index)
+                                          .new_cases,
+                                      "New Cases"),
+                                  generateInfoTile(
+                                      Icons.sentiment_very_dissatisfied,
+                                      (_loadedData
+                                          .elementAt(index)
+                                          .new_deaths == "null")
+                                          ? "0"
+                                          : _loadedData
+                                          .elementAt(index)
+                                          .new_deaths,
+                                      "New Deaths"),
+                                  generateInfoTile(
+                                      Icons.airline_seat_flat_angled,
+                                      (_loadedData
+                                          .elementAt(index)
+                                          .critical_cases == "null")
+                                          ? "0"
+                                          : _loadedData
+                                          .elementAt(index)
+                                          .critical_cases,
+                                      "Critical Cases"),
                                 ],
                               ),
                             );

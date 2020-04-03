@@ -2,6 +2,7 @@ import 'package:covid19counter/CountrySearchView.dart';
 import 'package:covid19counter/api/stats.dart';
 import 'package:covid19counter/flagUrl.dart';
 import 'package:covid19counter/models/stat.dart';
+import 'package:covid19counter/page_history.dart';
 import 'package:covid19counter/widgets/InfoTile.dart';
 import 'package:covid19counter/widgets/bigNumber.dart';
 import 'package:flutter/cupertino.dart';
@@ -278,12 +279,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       // but we allow changing it through bottom buttons
                       // but we don't swipe it, we swipe the controllerFlags
                       // and in turn it swipes the infoPage
-                      SizedBox(
-                        height: MediaQuery
-                            .of(context)
-                            .copyWith()
-                            .size
-                            .height,
+                      ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: 600, maxHeight: 800),
                         child: new Swiper(
                           controller: controllerInfoPage,
                           itemCount: _loadedData.length,
@@ -330,6 +327,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                       Icons.airline_seat_flat_angled, _loadedData
                                       .elementAt(index)
                                       .critical_cases, "Critical Cases"),
+                                  Spacer(),
+                                  FlatButton.icon(
+                                    icon: Icon(Icons.history),
+                                    label: Text("View History"),
+                                    onPressed: () {
+                                      Navigator.push(context, new MaterialPageRoute(builder: (BuildContext c) {
+                                        return new page_history(countryName: _loadedData
+                                            .elementAt(index)
+                                            .country);
+                                      }));
+                                    },
+                                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                                    color: Colors.blueGrey[50],
+                                  )
                                 ],
                               ),
                             );
@@ -342,7 +354,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.all(20.0),
                         child: Text(
                           "Made With ❤ In India by TAOSIF7",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                         ),
                       )
                     ]),

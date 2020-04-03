@@ -242,9 +242,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   alignment: Alignment.bottomCenter,
                                   fit: StackFit.expand,
                                   children: <Widget>[
-                                    Image.network(
-                                      flagUrl,
+                                    FadeInImage(
+                                      image: NetworkImage(flagUrl),
                                       fit: BoxFit.fill,
+                                      placeholder: AssetImage("assets/images/placeholder.png"),
                                     ),
                                     Container(
                                       alignment: Alignment.bottomCenter,

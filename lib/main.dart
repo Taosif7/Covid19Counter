@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
@@ -44,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   SwiperController controllerFlags = new SwiperController();
   SwiperController controllerInfoPage = new SwiperController();
   api_statistics StatsAPI = new api_statistics();
+  NumberFormat formatter = new NumberFormat("##,##,##,###");
 
   @override
   void initState() {
@@ -156,9 +158,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   itemBuilder: (BuildContext context, int index) {
                                     return ListTile(
                                       dense: true,
-                                      trailing: Text(_loadedData
+                                      trailing: Text(formatter.format(int.parse(_loadedData
                                           .elementAt(index)
-                                          .total_cases),
+                                          .total_cases))),
                                       title: Text(_loadedData
                                           .elementAt(index)
                                           .country),
@@ -400,13 +402,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget generateInfoTile(IconData icon, String data, String info) {
     return ListTile(
-        leading: Icon(icon), title: Text(data), trailing: Text(info), contentPadding: EdgeInsets.symmetric(horizontal: 50));
+        leading: Icon(icon),
+        title: Text(formatter.format(int.parse(data))),
+        trailing: Text(info),
+        contentPadding: EdgeInsets.symmetric(horizontal: 50));
   }
 
   List<Widget> generateBigNumberWidget(IconData icon, Color color, String bigNumber, String title) {
     return [
       Text(
-        bigNumber,
+        formatter.format(int.parse(bigNumber)),
         style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold, color: color),
         textAlign: TextAlign.center,
       ),

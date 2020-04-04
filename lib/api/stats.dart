@@ -14,6 +14,7 @@ class api_statistics extends Api {
 
     for (dynamic item in responseData["response"]) {
       model_stat stat = model_stat.fromJson(item);
+      if (stat.country == "World") continue; // Skip the "World" Data
       stat_list.add(stat);
     }
 
